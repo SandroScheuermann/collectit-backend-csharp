@@ -1,0 +1,225 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Game-Collector\\BackEnd\\GameCollector.API\\GameCollector.API.csproj": {}
+  },
+  "projects": {
+    "D:\\Game-Collector\\BackEnd\\GameCollector.API\\GameCollector.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Game-Collector\\BackEnd\\GameCollector.API\\GameCollector.API.csproj",
+        "projectName": "GameCollector.API",
+        "projectPath": "D:\\Game-Collector\\BackEnd\\GameCollector.API\\GameCollector.API.csproj",
+        "packagesPath": "C:\\Users\\sandr\\.nuget\\packages\\",
+        "outputPath": "D:\\Game-Collector\\BackEnd\\GameCollector.API\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\sandr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Game-Collector\\BackEnd\\GameCollector.Domain\\GameCollector.Domain.csproj": {
+                "projectPath": "D:\\Game-Collector\\BackEnd\\GameCollector.Domain\\GameCollector.Domain.csproj"
+              },
+              "D:\\Game-Collector\\BackEnd\\GameCollector.Infra\\GameCollector.Infra.csproj": {
+                "projectPath": "D:\\Game-Collector\\BackEnd\\GameCollector.Infra\\GameCollector.Infra.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.20.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Game-Collector\\BackEnd\\GameCollector.Domain\\GameCollector.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Game-Collector\\BackEnd\\GameCollector.Domain\\GameCollector.Domain.csproj",
+        "projectName": "GameCollector.Domain",
+        "projectPath": "D:\\Game-Collector\\BackEnd\\GameCollector.Domain\\GameCollector.Domain.csproj",
+        "packagesPath": "C:\\Users\\sandr\\.nuget\\packages\\",
+        "outputPath": "D:\\Game-Collector\\BackEnd\\GameCollector.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\sandr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[2.20.0, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.20.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Game-Collector\\BackEnd\\GameCollector.Infra\\GameCollector.Infra.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Game-Collector\\BackEnd\\GameCollector.Infra\\GameCollector.Infra.csproj",
+        "projectName": "GameCollector.Infra",
+        "projectPath": "D:\\Game-Collector\\BackEnd\\GameCollector.Infra\\GameCollector.Infra.csproj",
+        "packagesPath": "C:\\Users\\sandr\\.nuget\\packages\\",
+        "outputPath": "D:\\Game-Collector\\BackEnd\\GameCollector.Infra\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\sandr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Game-Collector\\BackEnd\\GameCollector.Domain\\GameCollector.Domain.csproj": {
+                "projectPath": "D:\\Game-Collector\\BackEnd\\GameCollector.Domain\\GameCollector.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.Extensions.Options": {
+              "target": "Package",
+              "version": "[7.0.1, )"
+            },
+            "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[2.20.0, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.20.0, )"
+            },
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

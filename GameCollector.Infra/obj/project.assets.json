@@ -471,7 +471,7 @@
           "lib/net6.0/ZstdSharp.dll": {}
         }
       },
-      "GameCollector.Domain/1.0.0": {
+      "CollectIt.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -479,10 +479,10 @@
           "MongoDB.Driver": "2.20.0"
         },
         "compile": {
-          "bin/placeholder/GameCollector.Domain.dll": {}
+          "bin/placeholder/CollectIt.Domain.dll": {}
         },
         "runtime": {
-          "bin/placeholder/GameCollector.Domain.dll": {}
+          "bin/placeholder/CollectIt.Domain.dll": {}
         }
       }
     }
@@ -1206,15 +1206,15 @@
         "zstdsharp.port.nuspec"
       ]
     },
-    "GameCollector.Domain/1.0.0": {
+    "CollectIt.Domain/1.0.0": {
       "type": "project",
-      "path": "../GameCollector.Domain/GameCollector.Domain.csproj",
-      "msbuildProject": "../GameCollector.Domain/GameCollector.Domain.csproj"
+      "path": "../GameCollector.Domain/CollectIt.Domain.csproj",
+      "msbuildProject": "../GameCollector.Domain/CollectIt.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "GameCollector.Domain >= 1.0.0",
+      "CollectIt.Domain >= 1.0.0",
       "Microsoft.Extensions.Options >= 7.0.1",
       "MongoDB.Bson >= 2.20.0",
       "MongoDB.Driver >= 2.20.0",
@@ -1227,11 +1227,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Game-Collector\\BackEnd\\GameCollector.Infra\\GameCollector.Infra.csproj",
-      "projectName": "GameCollector.Infra",
-      "projectPath": "D:\\Game-Collector\\BackEnd\\GameCollector.Infra\\GameCollector.Infra.csproj",
+      "projectUniqueName": "D:\\collectit-backend-csharp\\GameCollector.Infra\\CollectIt.Infra.csproj",
+      "projectName": "CollectIt.Infra",
+      "projectPath": "D:\\collectit-backend-csharp\\GameCollector.Infra\\CollectIt.Infra.csproj",
       "packagesPath": "C:\\Users\\sandr\\.nuget\\packages\\",
-      "outputPath": "D:\\Game-Collector\\BackEnd\\GameCollector.Infra\\obj\\",
+      "outputPath": "D:\\collectit-backend-csharp\\GameCollector.Infra\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sandr\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1248,8 +1248,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Game-Collector\\BackEnd\\GameCollector.Domain\\GameCollector.Domain.csproj": {
-              "projectPath": "D:\\Game-Collector\\BackEnd\\GameCollector.Domain\\GameCollector.Domain.csproj"
+            "D:\\collectit-backend-csharp\\GameCollector.Domain\\CollectIt.Domain.csproj": {
+              "projectPath": "D:\\collectit-backend-csharp\\GameCollector.Domain\\CollectIt.Domain.csproj"
             }
           }
         }

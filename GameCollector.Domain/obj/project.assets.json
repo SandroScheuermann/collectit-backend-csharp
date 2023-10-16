@@ -757,11 +757,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Game-Collector\\BackEnd\\GameCollector.Domain\\GameCollector.Domain.csproj",
-      "projectName": "GameCollector.Domain",
-      "projectPath": "D:\\Game-Collector\\BackEnd\\GameCollector.Domain\\GameCollector.Domain.csproj",
+      "projectUniqueName": "D:\\collectit-backend-csharp\\GameCollector.Domain\\CollectIt.Domain.csproj",
+      "projectName": "CollectIt.Domain",
+      "projectPath": "D:\\collectit-backend-csharp\\GameCollector.Domain\\CollectIt.Domain.csproj",
       "packagesPath": "C:\\Users\\sandr\\.nuget\\packages\\",
-      "outputPath": "D:\\Game-Collector\\BackEnd\\GameCollector.Domain\\obj\\",
+      "outputPath": "D:\\collectit-backend-csharp\\GameCollector.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sandr\\AppData\\Roaming\\NuGet\\NuGet.Config",

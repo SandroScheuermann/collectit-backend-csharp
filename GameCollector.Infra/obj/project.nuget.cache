@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yaRFbHgOTkflnBngDZVDJ57lNbIgMavfR6MsvocH81okD5AiGU7+1iiZoneOBTowH317FbtsZjcaqH1ilcoRTg==",
+  "dgSpecHash": "AdoFF8trGOgzOdk6MFlkl3++44WZ46I8jOnkuTPcMdrWcsxIe3mk8mAfIdyaBQdaD8uHhfTeAnFmk1YNJ/r6sQ==",
   "success": true,
-  "projectFilePath": "D:\\Game-Collector\\BackEnd\\GameCollector.Infra\\GameCollector.Infra.csproj",
+  "projectFilePath": "D:\\collectit-backend-csharp\\GameCollector.Infra\\CollectIt.Infra.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\sandr\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
     "C:\\Users\\sandr\\.nuget\\packages\\awssdk.securitytoken\\3.7.100.14\\awssdk.securitytoken.3.7.100.14.nupkg.sha512",

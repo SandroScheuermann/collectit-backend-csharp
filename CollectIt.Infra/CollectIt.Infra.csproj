@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GameCollector.Domain\GameCollector.Domain.csproj" />
+    <ProjectReference Include="..\CollectIt.Domain\CollectIt.Domain.csproj" />
   </ItemGroup>
 
 </Project>

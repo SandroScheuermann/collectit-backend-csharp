@@ -1,4 +1,5 @@
 ﻿using GameCollector.Domain.Entity;
+using MongoDB.Driver;
 
 namespace GameCollector.Domain.Game
 {
@@ -6,9 +7,9 @@ namespace GameCollector.Domain.Game
     {
         Task InsertGameItem(GameItem gameItem);
 
-        Task EditGameItem(GameItem gameItem);
+        Task<ReplaceOneResult> EditGameItem(GameItem gameItem);
 
-        Task DeleteGameItem(string id);
+        Task<DeleteResult> DeleteGameItem(string id);
 
         Task<List<GameItem>> GetAllGameItems(); 
          

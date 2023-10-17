@@ -1,4 +1,5 @@
 ﻿using GameCollector.Domain.Entity.Shared;
+using MongoDB.Driver;
 
 namespace GameCollector.Domain.Shared
 {
@@ -7,7 +8,7 @@ namespace GameCollector.Domain.Shared
         public Task<List<T>> GetAllAsync();
         public Task<T> GetByIdAsync(string id);
         public Task InsertAsync(T item);
-        public Task DeleteAsync(string id);
-        public Task UpdateAsync(T item);
+        public Task<DeleteResult> DeleteAsync(string id);
+        public Task<ReplaceOneResult> UpdateAsync(T item);
     }
 }

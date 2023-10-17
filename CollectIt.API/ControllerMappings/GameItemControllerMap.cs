@@ -7,40 +7,36 @@ namespace GameCollector.API.ControllerMappings
     {
         public static void ConfigureGameItemControllerMappings(this WebApplication app)
         {
-            _ = app.MapGet("/GameItems/", GetAllGameItems);
-            _ = app.MapGet("/GameItems/{id}", GetGameItemById);
-            _ = app.MapPost("/GameItems/", InsertGameItem);
-            _ = app.MapDelete("/GameItems/{id}", DeleteGameItemById);
-            _ = app.MapPut("/GameItems/", UpdateGameItem);
+            _ = app.MapGet("/GameItems/", GetAllGameItems).RequireAuthorization();
+            _ = app.MapGet("/GameItems/{id}", GetGameItemById).RequireAuthorization();
+            _ = app.MapPost("/GameItems/", InsertGameItem).RequireAuthorization();
+            _ = app.MapDelete("/GameItems/{id}", DeleteGameItemById).RequireAuthorization();
+            _ = app.MapPut("/GameItems/", UpdateGameItem).RequireAuthorization();
         }
 
         private static async Task<IResult> GetAllGameItems(IGameItemService gameItemService)
         {
             List<GameItem> gameItems = await gameItemService.GetAllGameItems();
 
-            return gameItems == null ? Results.NotFound() : Results.Ok(gameItems);
+            return gameItems.Any() == true ? Results.Ok(gameItems) : Results.NotFound();
         }
         private static async Task<IResult> UpdateGameItem(GameItem gameItem, IGameItemService gameItemService)
         {
-            Task result = gameItemService.EditGameItem(gameItem);
+            var result = await gameItemService.EditGameItem(gameItem);
 
-            await result;
-
-            return !result.IsCompleted ? Results.Problem() : Results.Ok();
+            return result.ModifiedCount > 0 ? Results.Ok() : Results.NoContent(); 
         }
         private static async Task<IResult> DeleteGameItemById(string id, IGameItemService gameItemService)
         {
-            Task result = gameItemService.DeleteGameItem(id);
+            var result = await gameItemService.DeleteGameItem(id); 
 
-            await result;
-
-            return !result.IsCompleted ? Results.NotFound() : Results.Ok();
+            return result.DeletedCount > 0 ? Results.Ok() : Results.NoContent();
         }
         private static async Task<IResult> GetGameItemById(string id, IGameItemService gameItemService)
         {
             GameItem gameItem = await gameItemService.GetGameItemById(id);
 
-            return gameItem == null ? Results.NotFound() : Results.Ok(gameItem);
+            return gameItem != null ? Results.Ok(gameItem) : Results.NotFound();
         }
         private static async Task<IResult> InsertGameItem(GameItem gameItem, IGameItemService gameItemService)
         {
@@ -48,7 +44,7 @@ namespace GameCollector.API.ControllerMappings
 
             await task;
 
-            return !task.IsCompleted ? Results.Problem() : Results.Ok(gameItem);
+            return task.IsCompleted ? Results.Ok(gameItem) : Results.Problem();
         }
     }
-} 
+}

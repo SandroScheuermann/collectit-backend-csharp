@@ -1,4 +1,5 @@
 ﻿using GameCollector.Domain.Entity;
+using MongoDB.Driver;
 
 namespace GameCollector.Domain.Game
 {
@@ -16,14 +17,14 @@ namespace GameCollector.Domain.Game
             await Repository.InsertAsync(gameItem);
         }
 
-        public async Task EditGameItem(GameItem gameItem)
+        public async Task<ReplaceOneResult> EditGameItem(GameItem gameItem)
         { 
-            await Repository.UpdateAsync(gameItem);
+            return await Repository.UpdateAsync(gameItem);
         }
 
-        public async Task DeleteGameItem(string id)
+        public async Task<DeleteResult> DeleteGameItem(string id)
         {  
-            await Repository.DeleteAsync(id);
+            return await Repository.DeleteAsync(id);
         }
 
         public async Task<GameItem> GetGameItemById(string id)
@@ -34,7 +35,6 @@ namespace GameCollector.Domain.Game
         public async Task<List<GameItem>> GetAllGameItems()
         {
             return await Repository.GetAllAsync();
-        }
-
+        } 
     }
 }

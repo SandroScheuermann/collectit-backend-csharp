@@ -22,11 +22,11 @@ namespace GameCollector.Infra.DataAccess.Shared
             await Collection.InsertOneAsync(item);
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task<DeleteResult> DeleteAsync(string id)
         {
             var deleteByIdFilter = Builders<T>.Filter.Eq(entity => entity.Id, id);
 
-            await Collection.DeleteOneAsync(deleteByIdFilter);
+            return await Collection.DeleteOneAsync(deleteByIdFilter);
         }
 
         public async Task<List<T>> GetAllAsync()
@@ -42,11 +42,11 @@ namespace GameCollector.Infra.DataAccess.Shared
             return await Collection.Find(getByIdFilter).FirstOrDefaultAsync();
         }
 
-        public async Task UpdateAsync(T item)
+        public async Task<ReplaceOneResult> UpdateAsync(T item)
         {
             var replaceFilter = Builders<T>.Filter.Eq(entity => entity.Id, item.Id);
 
-            await Collection.ReplaceOneAsync(replaceFilter, item);
+            return await Collection.ReplaceOneAsync(replaceFilter, item);
         }
     }
 }

@@ -15,14 +15,14 @@ namespace GameCollector.API.ControllerMappings
         {
             var result = await authService.Login(loginRequest.Email, loginRequest.Password);
 
-            return result.IsSuccess ? Results.Ok(result.Content) : Results.Problem(result.ErrorMessage);
+            return result.IsSuccess ? Results.Ok(result.Content) : Results.BadRequest(result.ErrorMessage);
         }
 
         private static async Task<IResult> Register(UserRegisterRequest registerRequest, IAuthService authService)
         {
             var result = await authService.Register(registerRequest.UserEmail, registerRequest.UserName, registerRequest.Password);
 
-            return result.IsSuccess ? Results.Ok() : Results.Problem(result.ErrorMessage);
+            return result.IsSuccess ? Results.Ok() : Results.BadRequest(result.ErrorMessage);
         }
     }
 }

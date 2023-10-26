@@ -5,7 +5,7 @@ using MongoDbGenericRepository.Attributes;
 namespace CollectIt.Domain.Entity.Auth
 {
     [CollectionName("Auth-Roles")]
-    public class ApplicationRole : MongoIdentityRole<ObjectId>
+    public class ApplicationRole : MongoIdentityRole<Guid>
     {
         public ApplicationRole() : base() { }
 

@@ -1,5 +1,5 @@
-using GameCollector.Domain.Entity;
-using GameCollector.Domain.Game;
+using CollectIt.API.ViewModels.Auth;
+using CollectIt.Domain.Auth;
 
 namespace GameCollector.API.ControllerMappings
 {
@@ -7,26 +7,22 @@ namespace GameCollector.API.ControllerMappings
     {
         public static void ConfigureAuthControllerMappings(this WebApplication app)
         {
-            _ = app.MapGet("/auth/login", Login);
-            _ = app.MapGet("/auth/register", Register); 
+            _ = app.MapPost("/auth/login", Login);
+            _ = app.MapPost("/auth/register", Register);
         }
 
-        private static async Task<IResult> Login(GameItem gameItem, IGameItemService gameItemService)
+        private static async Task<IResult> Login(UserLoginRequest loginRequest, IAuthService authService)
         {
-            Task task = gameItemService.InsertGameItem(gameItem);
+            var result = await authService.Login(loginRequest.Email, loginRequest.Password);
 
-            await task;
-
-            return task.IsCompleted ? Results.Ok(gameItem) : Results.Problem();
+            return result.IsSuccess ? Results.Ok(result.Content) : Results.Problem(result.ErrorMessage);
         }
-        private static async Task<IResult> Register(GameItem gameItem, IGameItemService gameItemService)
+
+        private static async Task<IResult> Register(UserRegisterRequest registerRequest, IAuthService authService)
         {
-            Task task = gameItemService.InsertGameItem(gameItem);
+            var result = await authService.Register(registerRequest.UserEmail, registerRequest.UserName, registerRequest.Password);
 
-            await task;
-
-            return task.IsCompleted ? Results.Ok(gameItem) : Results.Problem();
+            return result.IsSuccess ? Results.Ok() : Results.Problem(result.ErrorMessage);
         }
-
     }
 }

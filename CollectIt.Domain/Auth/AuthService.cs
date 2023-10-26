@@ -1,51 +1,58 @@
-﻿using CollectIt.Domain.Entity.Auth;
-using Microsoft.AspNetCore.Identity; 
+﻿using CollectIt.Domain.Auth.Jwt;
+using CollectIt.Domain.Entity.Auth;
+using CollectIt.Domain.Shared.ErrorHandling;
+using Microsoft.AspNetCore.Identity;
 
 namespace CollectIt.Domain.Auth
 {
-    public class AuthService
+    public class AuthService : IAuthService
     {
         private UserManager<ApplicationUser> UserManager { get; init; }
 
-        public AuthService(UserManager<ApplicationUser> userManager)
+        private IJwtTokenService JwtTokenService { get; set; }
+
+        public AuthService(UserManager<ApplicationUser> userManager, IJwtTokenService jwtTokenService)
         {
             UserManager = userManager;
+            JwtTokenService = jwtTokenService;
         }
 
-        public async Task<IResult> Register(string email, string password)
+        public async Task<ProcessResult> Register(string email, string username, string password)
         {
-            var user = new ApplicationUser(email, email);
+            var user = new ApplicationUser(username, email);
+
             var result = await UserManager.CreateAsync(user, password);
 
             if (result.Succeeded)
             {
-                // Usuário registrado com sucesso
-                return await ;
+                return ProcessResult.Success();
             }
             else
             {
-                // Erros durante o registro
-                await Task.CompletedTask;
+                return ProcessResult.Fail(string.Join(',', result.Errors.Select(e => e.Description)));
             }
         }
 
-        public async Task Login(string email, string password)
+        public async Task<ProcessResult<string>> Login(string email, string password)
         {
             var user = await UserManager.FindByEmailAsync(email);
 
             if (user != null)
             {
-                // Verifica a senha
                 var isPasswordValid = await UserManager.CheckPasswordAsync(user, password);
+
                 if (isPasswordValid)
                 {
-                    // Gere o token JWT aqui e retorne para o usuário
-                    await Task.CompletedTask;
+                    var userToken = JwtTokenService.GenerateJwtToken(user);
+                    return ProcessResult<string>.Success(userToken);
+                }
+                else
+                {
+                    return ProcessResult<string>.Fail("Login ou senha inválidos!");
                 }
             }
 
-            await Task.CompletedTask;
+            return ProcessResult<string>.Fail("Erro não catalogado");
         }
-
     }
 }

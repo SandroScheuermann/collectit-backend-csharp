@@ -10,7 +10,7 @@ namespace GameCollector.Infra.DataAccess.Shared
     {
         private IMongoCollection<T> Collection { get; set; }
 
-        public MongoRepository(IOptions<IEntitySettings> settings)
+        public MongoRepository(IOptions<IDefaultSettings> settings)
         {
             var mongoClient = new MongoClient(settings.Value.ConnectionString);
             var mongoDatabase = mongoClient.GetDatabase(settings.Value.DatabaseName);

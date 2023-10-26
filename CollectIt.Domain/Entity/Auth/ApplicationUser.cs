@@ -5,7 +5,7 @@ using MongoDbGenericRepository.Attributes;
 namespace CollectIt.Domain.Entity.Auth
 {
     [CollectionName("Auth-Users")]
-    public class ApplicationUser : MongoIdentityUser<ObjectId>
+    public class ApplicationUser : MongoIdentityUser<Guid>
     {
         public ApplicationUser() : base() { } 
 

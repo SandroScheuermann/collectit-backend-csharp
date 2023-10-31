@@ -39,6 +39,16 @@ builder.Services.AddScoped<IGameItemService, GameItemService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+builder.Services.AddCors(opts =>
+{
+    opts.AddPolicy("DefaultPolicy", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddAuthentication(opts =>
 {
     opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -78,6 +88,8 @@ app.UseAuthorization();
 
 app.ConfigureGameItemControllerMappings();
 app.ConfigureAuthControllerMappings();
+
+app.UseCors("DefaultPolicy");
 
 app.Run();
 

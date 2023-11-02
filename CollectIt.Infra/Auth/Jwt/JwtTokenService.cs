@@ -27,7 +27,8 @@ namespace CollectIt.Domain.Auth.Jwt
             {
                 Subject = new ClaimsIdentity(new Claim[] {
                     new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Email, user.Email.ToString()), 
                 }),
 
                 Expires = DateTime.UtcNow.AddHours(1),

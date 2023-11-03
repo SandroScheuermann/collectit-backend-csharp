@@ -7,6 +7,7 @@ using GameCollector.Domain.ConfigurationModel;
 using GameCollector.Domain.Game;
 using GameCollector.Infra.Game;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -24,7 +25,7 @@ var jwtSettingsSection = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<DefaultSettings>(defaultSettingsSection);
 builder.Services.Configure<JwtSettings>(jwtSettingsSection);
 
-var productionConnectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING");
+var productionConnectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING"); 
 
 var conectionString = productionConnectionString ?? defaultSettingsSection.GetSection("ConnectionString").Value;
 
@@ -47,7 +48,7 @@ builder.Services.AddCors(opts =>
 {
     opts.AddPolicy("DefaultPolicy", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.AllowAnyOrigin() 
               .AllowAnyHeader()
               .AllowAnyMethod();
     });

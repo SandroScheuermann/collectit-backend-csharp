@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for booklist-api on 2023-10-31T23:03:06-03:00
+# fly.toml app configuration file generated for muscler-webapi on 2023-11-08T15:14:16-03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -6,8 +6,8 @@
 app = "muscler-webapi"
 primary_region = "gru"
 
-[build] 
-  
+[build]
+
 [http_service]
   internal_port = 80
   force_https = true

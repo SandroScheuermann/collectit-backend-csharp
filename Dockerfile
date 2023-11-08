@@ -11,7 +11,7 @@ COPY /Muscler.Infra/Muscler.Infra.csproj ./Muscler.Infra/Muscler.Infra.csproj
 COPY /Muscler.Tests/Muscler.Tests.csproj ./Muscler.Tests/Muscler.Tests.csproj
 COPY Muscler.sln ./ 
 
-RUN dotnet restore CollectIt.sln
+RUN dotnet restore Muscler.sln
 
 # Copy the rest of the application code
 COPY . .

@@ -25,7 +25,11 @@ builder.Services.Configure<JwtSettings>(jwtSettingsSection);
 
 var productionConnectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING"); 
 
+
 var conectionString = productionConnectionString ?? defaultSettingsSection.GetSection("ConnectionString").Value;
+
+
+throw new Exception($"{conectionString}");
 
 builder.Services
     .AddIdentity<ApplicationUser, ApplicationRole>()

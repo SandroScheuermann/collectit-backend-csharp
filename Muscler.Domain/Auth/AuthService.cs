@@ -1,20 +1,26 @@
-﻿using Muscler.Domain.Auth.Jwt;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Muscler.Domain.Auth.Jwt;
+using Muscler.Domain.Email;
 using Muscler.Domain.Entity.Auth;
 using Muscler.Domain.Shared.ErrorHandling;
-using Microsoft.AspNetCore.Identity;
+using System.Net;
 
 namespace Muscler.Domain.Auth
 {
     public class AuthService : IAuthService
     {
         private UserManager<ApplicationUser> UserManager { get; init; }
-
         private IJwtTokenService JwtTokenService { get; set; }
+        public IEmailService EmailService { get; set; }
+        public IHttpContextAccessor HttpContextAccessor { get; set; }
 
-        public AuthService(UserManager<ApplicationUser> userManager, IJwtTokenService jwtTokenService)
+        public AuthService(UserManager<ApplicationUser> userManager, IJwtTokenService jwtTokenService, IEmailService emailService, IHttpContextAccessor httpContextoAcessor)
         {
             UserManager = userManager;
             JwtTokenService = jwtTokenService;
+            EmailService = emailService;
+            HttpContextAccessor = httpContextoAcessor;
         }
 
         public async Task<ProcessResult> Register(string email, string username, string password)
@@ -25,12 +31,25 @@ namespace Muscler.Domain.Auth
 
             if (result.Succeeded)
             {
+                await SendConfirmationLink(user);
+
                 return ProcessResult.Success();
             }
             else
             {
                 return ProcessResult.Fail(string.Join(',', result.Errors.Select(e => e.Description)));
             }
+        }
+
+        private async Task<SendGrid.Response> SendConfirmationLink(ApplicationUser user)
+        {
+            var token = await UserManager.GenerateEmailConfirmationTokenAsync(user);
+
+            var encodedToken = WebUtility.UrlEncode(token);
+
+            var confirmationLink = $"{HttpContextAccessor.HttpContext.Request.Scheme}://{HttpContextAccessor.HttpContext.Request.Host.Value}/auth/confirm-account?userId={user.Id}&token={encodedToken}";
+
+            return await EmailService.SendConfirmationLink(confirmationLink, user);
         }
 
         public async Task<ProcessResult<string>> Login(string email, string password)
@@ -53,6 +72,13 @@ namespace Muscler.Domain.Auth
             }
 
             return ProcessResult<string>.Fail("Erro não catalogado");
+        }
+
+        public async Task<IdentityResult> ConfirmAccount(string userId, string token)
+        {
+            var user = await UserManager.FindByIdAsync(userId);
+
+            return await UserManager.ConfirmEmailAsync(user, token);
         }
     }
 }

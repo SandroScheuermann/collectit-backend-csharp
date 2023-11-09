@@ -9,6 +9,7 @@ namespace Muscler.API.ControllerMappings
         {
             _ = app.MapPost("/auth/login", Login);
             _ = app.MapPost("/auth/register", Register);
+            _ = app.MapGet("/auth/confirm-account", ConfirmAccount);
         }
 
         private static async Task<IResult> Login(UserLoginRequest loginRequest, IAuthService authService)
@@ -23,6 +24,12 @@ namespace Muscler.API.ControllerMappings
             var result = await authService.Register(registerRequest.UserEmail, registerRequest.UserName, registerRequest.Password);
 
             return result.IsSuccess ? Results.Ok() : Results.BadRequest(result.ErrorMessage);
+        }
+        private static async Task<IResult> ConfirmAccount(string userId, string token, IAuthService authService)
+        {  
+            var result = await authService.ConfirmAccount(userId, token); 
+
+            return result.Succeeded ? Results.Redirect("https://muscler.pro/login") : Results.BadRequest(string.Join(',', result.Errors.Select(x => x.Description)));
         }
     }
 }

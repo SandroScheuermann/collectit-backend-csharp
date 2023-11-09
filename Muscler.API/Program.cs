@@ -5,9 +5,9 @@ using Muscler.API.ControllerMappings;
 using Muscler.Domain.Auth;
 using Muscler.Domain.Auth.Jwt;
 using Muscler.Domain.ConfigurationModel;
+using Muscler.Domain.Email;
 using Muscler.Domain.Entity.Auth;
-using Muscler.Domain.Game;
-using Muscler.Infra.Game;
+using SendGrid.Extensions.DependencyInjection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,12 +23,15 @@ var jwtSettingsSection = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<DefaultSettings>(defaultSettingsSection);
 builder.Services.Configure<JwtSettings>(jwtSettingsSection);
 
-var productionConnectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING");  
+var productionConnectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING");
 
-var conectionString = productionConnectionString ?? defaultSettingsSection.GetSection("ConnectionString").Value;  
+var conectionString = productionConnectionString ?? defaultSettingsSection.GetSection("ConnectionString").Value;
 
 builder.Services
-    .AddIdentity<ApplicationUser, ApplicationRole>()
+    .AddIdentity<ApplicationUser, ApplicationRole>(options =>
+    {
+        options.User.RequireUniqueEmail = true;
+    })
     .AddMongoDbStores<ApplicationUser, ApplicationRole, Guid>
     (
         conectionString,
@@ -36,17 +39,23 @@ builder.Services
     )
     .AddDefaultTokenProviders();
 
-builder.Services.AddScoped<IGameItemRepository, GameItemRepository>();
-builder.Services.AddScoped<IGameItemService, GameItemService>();
+  
+builder.Services.AddSendGrid(options =>
+{
+    options.ApiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY"); 
+});
 
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddScoped<IEmailService, EmailService>(); 
 builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddHttpContextAccessor(); 
 
 builder.Services.AddCors(opts =>
 {
     opts.AddPolicy("DefaultPolicy", policy =>
     {
-        policy.AllowAnyOrigin() 
+        policy.AllowAnyOrigin()
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -89,7 +98,6 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.ConfigureGameItemControllerMappings();
 app.ConfigureAuthControllerMappings();
 
 app.UseCors("DefaultPolicy");

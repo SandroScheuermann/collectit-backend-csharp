@@ -29,7 +29,7 @@ namespace Muscler.API.ControllerMappings
         {  
             var result = await authService.ConfirmAccount(userId, token); 
 
-            return result.Succeeded ? Results.Redirect("https://muscler.pro/login") : Results.BadRequest(string.Join(',', result.Errors.Select(x => x.Description)));
+            return result.Succeeded ? Results.Redirect("https://muscler.pro/register/email-confirmation?confirmed=true") : Results.BadRequest(string.Join(',', result.Errors.Select(x => x.Description)));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Google.Apis.Auth;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Muscler.Domain.Auth.Jwt;
 using Muscler.Domain.Email;
@@ -79,6 +80,27 @@ namespace Muscler.Domain.Auth
             var user = await UserManager.FindByIdAsync(userId);
 
             return await UserManager.ConfirmEmailAsync(user, token);
+        }
+
+        public async Task<ProcessResult<string>> OAuth2Login(string googleLoginToken)
+        {
+            try
+            {
+                var settings = new GoogleJsonWebSignature.ValidationSettings()
+                {
+                    Audience = new List<string> { "teste" }
+                };
+
+                GoogleJsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(googleLoginToken, settings);
+
+                var loginToken = JwtTokenService.GenerateJwtToken(payload);
+
+                return ProcessResult<string>.Success(loginToken);
+            }
+            catch (Exception ex)
+            {
+                return ProcessResult<string>.Fail(ex.Message);
+            }
         }
     }
 }

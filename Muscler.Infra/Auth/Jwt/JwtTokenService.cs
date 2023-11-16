@@ -1,7 +1,8 @@
-﻿using Muscler.Domain.ConfigurationModel;
-using Muscler.Domain.Entity.Auth;
+﻿using Google.Apis.Auth;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Muscler.Domain.ConfigurationModel;
+using Muscler.Domain.Entity.Auth;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -17,22 +18,38 @@ namespace Muscler.Domain.Auth.Jwt
             _secretKey = jwtSettings.Value.Key;
         }
 
-        public string GenerateJwtToken(ApplicationUser user)
+        public string GenerateJwtToken(ApplicationUser defaultPayload)
         {
-            var tokenHandler = new JwtSecurityTokenHandler(); 
+            var claims = new ClaimsIdentity(new Claim[] {
+                         new Claim(ClaimTypes.Name, defaultPayload.UserName),
+                         new Claim(ClaimTypes.NameIdentifier, defaultPayload.Id.ToString()),
+                         new Claim(ClaimTypes.Email, defaultPayload.Email),
+            });
+
+            return GenerateJwtToken(claims);
+        }
+
+        public string GenerateJwtToken(GoogleJsonWebSignature.Payload googlePayload)
+        {
+            var claims = new ClaimsIdentity(new Claim[] {
+                         new Claim(ClaimTypes.Name, googlePayload.Name),
+                         new Claim(ClaimTypes.NameIdentifier, googlePayload.Subject),
+                         new Claim(ClaimTypes.Email, googlePayload.Email),
+            });
+
+            return GenerateJwtToken(claims);
+        }
+
+        public string GenerateJwtToken(ClaimsIdentity claims)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
 
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_secretKey));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[] {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Email, user.Email.ToString()), 
-                }),
-
+                Subject = claims,
                 Expires = DateTime.UtcNow.AddHours(1),
-
                 SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -40,5 +57,6 @@ namespace Muscler.Domain.Auth.Jwt
 
             return tokenHandler.WriteToken(token);
         }
+
     }
 }

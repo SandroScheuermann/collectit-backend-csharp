@@ -21,7 +21,7 @@ namespace Muscler.API.ControllerMappings
         }
         private static async Task<IResult> OAuth2Login(OAuth2GoogleLoginRequest googleLoginRequest, IAuthService authService)
         {
-            var result = await authService.OAuth2Login(googleLoginRequest.Credential);
+            var result = await authService.OAuth2Login(googleLoginRequest.Credential);   
 
             return result.IsSuccess ? Results.Ok(result.Content) : Results.BadRequest(result.ErrorMessage);
         }

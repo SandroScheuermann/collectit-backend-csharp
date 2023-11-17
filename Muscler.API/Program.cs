@@ -22,7 +22,6 @@ var jwtSettingsSection = builder.Configuration.GetSection("JwtSettings");
 
 builder.Services.Configure<DefaultSettings>(defaultSettingsSection);
 builder.Services.Configure<JwtSettings>(jwtSettingsSection);
-
 builder.Services
     .AddIdentity<ApplicationUser, ApplicationRole>(options =>
     {
@@ -67,14 +66,18 @@ builder.Services.AddAuthentication(opts =>
 {
     opts.TokenValidationParameters = new()
     {
-        ValidIssuer = Environment.GetEnvironmentVariable("DEFAULT-AUTH-ISSUER") ?? builder.Configuration.GetSection("JwtSettings:Issuer").Value,
-        ValidAudience = Environment.GetEnvironmentVariable("DEFAULT-AUTH-AUDIENCE") ?? builder.Configuration.GetSection("JwtSettings:Audience").Value,
-        IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("DEFAULT-AUTH-SECRETKEY") ?? builder.Configuration.GetSection("JwtSettings:Key").Value)),
         ValidateIssuer = true,
+        ValidIssuer = Environment.GetEnvironmentVariable("DEFAULT_AUTH_ISSUER") ?? builder.Configuration.GetSection("JwtSettings:Issuer").Value,
+
         ValidateAudience = true,
+        ValidAudience = Environment.GetEnvironmentVariable("DEFAULT_AUTH_AUDIENCE") ?? builder.Configuration.GetSection("JwtSettings:Audience").Value,
+
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("DEFAULT_AUTH_SECRETKEY") ?? builder.Configuration.GetSection("JwtSettings:Key").Value)),
+
         ValidateLifetime = true,
-        ValidateIssuerSigningKey = true
+        ClockSkew = TimeSpan.Zero,
     };
 });
 

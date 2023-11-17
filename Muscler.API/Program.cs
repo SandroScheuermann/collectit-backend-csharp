@@ -23,10 +23,6 @@ var jwtSettingsSection = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<DefaultSettings>(defaultSettingsSection);
 builder.Services.Configure<JwtSettings>(jwtSettingsSection);
 
-var productionConnectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING");
-
-var conectionString = productionConnectionString ?? defaultSettingsSection.GetSection("ConnectionString").Value;
-
 builder.Services
     .AddIdentity<ApplicationUser, ApplicationRole>(options =>
     {
@@ -34,22 +30,22 @@ builder.Services
     })
     .AddMongoDbStores<ApplicationUser, ApplicationRole, Guid>
     (
-        conectionString,
+        Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING") ?? defaultSettingsSection.GetSection("ConnectionString").Value,
         defaultSettingsSection.GetSection("DatabaseName").Value
     )
     .AddDefaultTokenProviders();
 
-  
+
 builder.Services.AddSendGrid(options =>
 {
-    options.ApiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY"); 
+    options.ApiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
 });
 
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
-builder.Services.AddScoped<IEmailService, EmailService>(); 
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
-builder.Services.AddHttpContextAccessor(); 
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddCors(opts =>
 {
@@ -71,10 +67,10 @@ builder.Services.AddAuthentication(opts =>
 {
     opts.TokenValidationParameters = new()
     {
-        ValidIssuer = builder.Configuration.GetSection("JwtSettings:Issuer").Value,
-        ValidAudience = builder.Configuration.GetSection("JwtSettings:Audience").Value,
-        IssuerSigningKey = new SymmetricSecurityKey
-        (Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JwtSettings:Key").Value)),
+        ValidIssuer = Environment.GetEnvironmentVariable("DEFAULT-AUTH-ISSUER") ?? builder.Configuration.GetSection("JwtSettings:Issuer").Value,
+        ValidAudience = Environment.GetEnvironmentVariable("DEFAULT-AUTH-AUDIENCE") ?? builder.Configuration.GetSection("JwtSettings:Audience").Value,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("DEFAULT-AUTH-SECRETKEY") ?? builder.Configuration.GetSection("JwtSettings:Key").Value)),
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,

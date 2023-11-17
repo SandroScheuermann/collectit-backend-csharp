@@ -88,7 +88,7 @@ namespace Muscler.Domain.Auth
             {
                 var settings = new GoogleJsonWebSignature.ValidationSettings()
                 {
-                    Audience = new List<string> { "teste" }
+                    Audience = new List<string> { Environment.GetEnvironmentVariable("GOOGLE-OAUTH2-CLIENTID") }
                 };
 
                 GoogleJsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(googleLoginToken, settings);

@@ -8,6 +8,7 @@ namespace Muscler.API.ControllerMappings
         public static void ConfigureAuthControllerMappings(this WebApplication app)
         {
             _ = app.MapPost("/auth/login", Login);
+            _ = app.MapPost("/auth/login/oauth2", OAuth2Login);
             _ = app.MapPost("/auth/register", Register);
             _ = app.MapGet("/auth/confirm-account", ConfirmAccount);
         }
@@ -15,6 +16,12 @@ namespace Muscler.API.ControllerMappings
         private static async Task<IResult> Login(UserLoginRequest loginRequest, IAuthService authService)
         {
             var result = await authService.Login(loginRequest.UserEmail, loginRequest.Password);
+
+            return result.IsSuccess ? Results.Ok(result.Content) : Results.BadRequest(result.ErrorMessage);
+        }
+        private static async Task<IResult> OAuth2Login(OAuth2GoogleLoginRequest googleLoginRequest, IAuthService authService)
+        {
+            var result = await authService.OAuth2Login(googleLoginRequest.Credential);   
 
             return result.IsSuccess ? Results.Ok(result.Content) : Results.BadRequest(result.ErrorMessage);
         }
@@ -26,8 +33,8 @@ namespace Muscler.API.ControllerMappings
             return result.IsSuccess ? Results.Ok() : Results.BadRequest(result.ErrorMessage);
         }
         private static async Task<IResult> ConfirmAccount(string userId, string token, IAuthService authService)
-        {  
-            var result = await authService.ConfirmAccount(userId, token); 
+        {
+            var result = await authService.ConfirmAccount(userId, token);
 
             return result.Succeeded ? Results.Redirect("https://muscler.pro/register/email-confirmation?confirmed=true") : Results.BadRequest(string.Join(',', result.Errors.Select(x => x.Description)));
         }
